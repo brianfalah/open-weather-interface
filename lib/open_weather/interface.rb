@@ -20,7 +20,22 @@ module OpenWeather
         options[:q] += ",#{options[:country_code]}"        
       end
       parse_response(self.get("", query: options))  
-      # new(options.merge(city: city)).retrive
+    end
+
+    def self.by_city_id(city_id, options = {})
+      options[:id] = city_id      
+      parse_response(self.get("", query: options))  
+    end
+
+    def self.by_lat_lon(lat, lon, options = {})
+      options[:lat] = lat
+      options[:lon] = lon
+      parse_response(self.get("", query: options))  
+    end
+
+    def self.by_zip(zip_code, country_code, options = {})
+      options[:zip] = "#{zip_code},#{country_code}"        
+      parse_response(self.get("", query: options))  
     end
 
     protected
