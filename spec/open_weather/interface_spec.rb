@@ -51,7 +51,7 @@ describe OpenWeather::Interface do
 		end
 	end
 	
-	# it 'by_zip response ok (API NOT WORKING PROPERLY' do
+	# it 'by_zip response ok (not included in standard package)' do
 	# 	response = OpenWeather::Interface.by_zip(94040, 'us')
 	# 	expect(response['cod']).to eq(200)
 	# 	if response['cod'] == 200
@@ -59,5 +59,33 @@ describe OpenWeather::Interface do
 	# 		expect(response['sys']['country']).to eq('US')
 	# 	end
 	# end
+
+	it 'with units option ok' do
+		response = OpenWeather::Interface.by_city_id(3435910, {units: 'metric'})
+		expect(response['cod']).to eq(200)						
+	end
+
+	it 'by_city_name not existing' do
+		response = OpenWeather::Interface.by_city_name('NOT EXISTING CITY')
+		expect(response['cod']).to eq(404)		
+	end
+
+	it 'with units option fail' do
+		response = OpenWeather::Interface.by_city_id(3435910, {units: 'metrical'})
+		expect(response['cod']).to eq(404)
+		expect(response['message']).to eq("metrical is not a valid unit")		
+	end
+
+	it 'with lang option fail' do
+		response = OpenWeather::Interface.by_city_id(3435910, {lang: 'spanish'})
+		expect(response['cod']).to eq(404)
+		expect(response['message']).to eq("spanish is not a valid language")	
+	end
+
+	it 'not permitted parameter' do
+		response = OpenWeather::Interface.by_city_name('Santa Fe', {language: 'sp'})
+		expect(response['cod']).to eq(404)
+		expect(response['message']).to eq("parameter language is not permitted")	
+	end
 
 end
