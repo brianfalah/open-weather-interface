@@ -65,6 +65,11 @@ describe OpenWeather::Interface do
 		expect(response['cod']).to eq(200)						
 	end
 
+	it 'with lang option ok' do
+		response = OpenWeather::Interface.by_city_id(3435910, {lang: 'es'})
+		expect(response['cod']).to eq(200)						
+	end
+
 	it 'by_city_name not existing' do
 		response = OpenWeather::Interface.by_city_name('NOT EXISTING CITY')
 		expect(response['cod']).to eq(404)		
