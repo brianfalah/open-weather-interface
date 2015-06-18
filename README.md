@@ -24,9 +24,7 @@ Call current weather data for one location
 
 You can choose these search methods:
 
-By city name
-By city ID
-By geographic coordinates
+By city name, By city ID, By geographic coordinates
 
 ## By city name
 Calls by city name. API respond with a list of results that match a searching word, execute:
